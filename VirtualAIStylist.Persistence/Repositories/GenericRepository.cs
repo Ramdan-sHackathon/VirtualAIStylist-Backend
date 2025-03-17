@@ -29,6 +29,9 @@ namespace VirtualAIStylist.Persistence.Repositories
 		public async Task<IReadOnlyList<TEntity>> GetAllAsync()
 		=> await _entities.ToListAsync();
 
+		public async Task<TEntity?> GetByIdAsync(TKey id)
+		=> await _entities.FindAsync(id)!;
+
 		public async Task<IReadOnlyList<TEntity>> GetWithPrdicate(Expression<Func<TEntity, bool>> pridecate)
 		=> await _entities.Where(pridecate).ToListAsync();
 

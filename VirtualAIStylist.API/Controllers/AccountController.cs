@@ -15,7 +15,7 @@ namespace VirtualAIStylist.API.Controllers
 			_mediator = mediator;
 		}
 
-		[HttpPut("Register")]
+		[HttpPost("Register")]
 		public async Task<ActionResult<Response>> Register([FromBody] CreateAccountCommand command)
 		{
 			return Ok(await _mediator.Send(command));

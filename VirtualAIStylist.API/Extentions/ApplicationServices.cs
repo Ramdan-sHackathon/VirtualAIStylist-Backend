@@ -1,9 +1,15 @@
-﻿using MediatR.NotificationPublishers;
+﻿using Mapster;
+using MediatR.NotificationPublishers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using VirtualAIStylist.Application.Features.Authentication.Commands.CreateAccount;
+using VirtualAIStylist.Application.Services;
 using VirtualAIStylist.Domain.Entities;
+using VirtualAIStylist.Domain.Interfaces;
+using VirtualAIStylist.Domain.Repositories;
 using VirtualAIStylist.Persistence.Data;
+using VirtualAIStylist.Persistence.Repositories;
 
 namespace VirtualAIStylist.API.Extentions
 {
@@ -28,8 +34,17 @@ namespace VirtualAIStylist.API.Extentions
 
 			});
 			#endregion
+
+			#region Services
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
+			services.AddScoped<IMediaService, MediaService>();
+			#endregion
+
+			#region Mapping Configurations
+			var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
+			typeAdapterConfig.Scan(Assembly.GetExecutingAssembly());
+			#endregion
 			//services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-			//services.AddScoped<IUnitOfWork, UnitOfWork>();
 			//services.AddScoped<IWardrobeRepository, WardrobeRepository>();
 			//services.AddScoped<IPieceRepository, PieceRepository>();
 			//services.AddScoped<IOutfitRepository, OutfitRepository>();
