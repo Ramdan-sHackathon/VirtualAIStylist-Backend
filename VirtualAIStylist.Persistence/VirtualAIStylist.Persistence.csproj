@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="DataSeeding\" />
-    <Folder Include="MappingProfiles\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace VirtualAIStylist.Domain.Repositories
 {
 	public interface IGenericRepository<TKey,TEntity> where TEntity:BaseEntity<TKey>
 	{
+		Task<TEntity?> GetByIdAsync(TKey id);
 		Task AddAsync(TEntity entity);
 		Task AddRangeAsync(IEnumerable<TEntity> entities);
 		Task<IReadOnlyList<TEntity>> GetAllAsync();

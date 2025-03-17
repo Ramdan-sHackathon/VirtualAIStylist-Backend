@@ -24,7 +24,10 @@ namespace VirtualAIStylist.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+                app.UseDeveloperExceptionPage();
+			}
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
