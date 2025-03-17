@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtualAIStylist.Persistence.Data;
 
@@ -11,9 +12,11 @@ using VirtualAIStylist.Persistence.Data;
 namespace VirtualAIStylist.Persistence.Migrations
 {
     [DbContext(typeof(VirtualAIStylistDbContext))]
-    partial class VirtualAIStylistDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250316061109_AddAttributesForAccount")]
+    partial class AddAttributesForAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

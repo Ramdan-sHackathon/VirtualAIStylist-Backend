@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\VirtualAIStylist.Application\VirtualAIStylist.Application.csproj" />
     <ProjectReference Include="..\VirtualAIStylist.Persistence\VirtualAIStylist.Persistence.csproj" />
   </ItemGroup>
 
