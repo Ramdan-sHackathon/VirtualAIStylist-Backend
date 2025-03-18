@@ -17,11 +17,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VirtualAIStylist.Application\VirtualAIStylist.Application.csproj" />
+    <ProjectReference Include="..\VirtualAIStylist.Infrastructure\VirtualAIStylist.Infrastructure.csproj" />
     <ProjectReference Include="..\VirtualAIStylist.Persistence\VirtualAIStylist.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\files\images\" />
   </ItemGroup>
 
 </Project>

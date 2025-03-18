@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualAIStylist.Application.Utility;
 using VirtualAIStylist.Domain.Entities;
+using VirtualAIStylist.Domain.Interfaces;
 
 namespace VirtualAIStylist.Application.Features.Authentication.Commands.CreateAccount
 {
 	public class CreateAccountCommand : IRequest<Response>
 	{
-		public string FristName { get; set; }
+		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public string password { get; set; }
@@ -26,10 +27,12 @@ namespace VirtualAIStylist.Application.Features.Authentication.Commands.CreateAc
 	public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Response>
 	{
 		private readonly UserManager<Account> _userManager;
+		private readonly IAuthService _authService;
 
-		public CreateAccountCommandHandler(UserManager<Account> userManager)
+		public CreateAccountCommandHandler(UserManager<Account> userManager, IAuthService authService)
 		{
 			_userManager = userManager;
+			_authService = authService;
 		}
 
 		public async Task<Response> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
@@ -43,24 +46,24 @@ namespace VirtualAIStylist.Application.Features.Authentication.Commands.CreateAc
 
 			var account = new Account
 			{
-				FirstName = request.FristName,
+				FirstName = request.FirstName,
 				LastName = request.LastName,
 				Email = request.Email,
 				Gender = request.Gender,
 				Age = request.Age,
-				UserName = request.Email.Split()[0]
+				UserName = request.Email.Split('@')[0]
 			};
 
 			await _userManager.CreateAsync(account, request.password);
 
-			//TODO: Generate Token
+			//TODO: Generate Token 
 
 			return await Response.Success(new CreateAccountCommandDto
 			{
 				Id = account.Id,
 				UserName = account.UserName,
 				Email = account.Email,
-				Token = "Token"
+				Token = await _authService.CreateTokenAsync(account, _userManager)
 			}, "Registration Successfully.");
 
 		}

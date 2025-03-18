@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VirtualAIStylist.Application.Features.Authentication.Commands.CreateAccount;
-using VirtualAIStylist.Application.Features.Authentication.Queries;
 using VirtualAIStylist.Application.Features.Authentication.Queries.Login;
 using VirtualAIStylist.Application.Utility;
 
@@ -21,14 +20,9 @@ namespace VirtualAIStylist.API.Controllers
 			return Ok(await _mediator.Send(command));
 		}
 
-		[HttpGet("Login")]
-		public async Task<ActionResult<Response>> Login([FromQuery] string Email,[FromQuery] string Password)
+		[HttpPost("Login")]
+		public async Task<ActionResult<Response>> Login([FromBody] LoginQuery query)
 		{
-			var query=new LoginQuery
-			{
-				Email = Email,
-				Password = Password
-			};
 			return Ok(await _mediator.Send(query));
 		}
 	}

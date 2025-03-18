@@ -8,6 +8,7 @@ using VirtualAIStylist.Application.Services;
 using VirtualAIStylist.Domain.Entities;
 using VirtualAIStylist.Domain.Interfaces;
 using VirtualAIStylist.Domain.Repositories;
+using VirtualAIStylist.Infrastructure.Authentication;
 using VirtualAIStylist.Persistence.Data;
 using VirtualAIStylist.Persistence.Repositories;
 
@@ -26,6 +27,8 @@ namespace VirtualAIStylist.API.Extentions
 				.AddEntityFrameworkStores<VirtualAIStylistDbContext>()
 				.AddDefaultTokenProviders();
 
+			services.AddHttpContextAccessor();
+
 			#region Mediator Service
 			services.AddMediatR(cgf =>
 			{
@@ -38,18 +41,30 @@ namespace VirtualAIStylist.API.Extentions
 			#region Services
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			services.AddScoped<IMediaService, MediaService>();
+			services.AddScoped<IAuthService, AuthService>();
 			#endregion
 
 			#region Mapping Configurations
 			var typeAdapterConfig = TypeAdapterConfig.GlobalSettings;
 			typeAdapterConfig.Scan(Assembly.GetExecutingAssembly());
 			#endregion
-			//services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-			//services.AddScoped<IWardrobeRepository, WardrobeRepository>();
-			//services.AddScoped<IPieceRepository, PieceRepository>();
-			//services.AddScoped<IOutfitRepository, OutfitRepository>();
+
 			services.AddControllers();
 			return services;
+		}
+
+		public static void ConfigureCORS(this IServiceCollection Services)
+		{
+			Services.AddCors(options =>
+			{
+				options.AddPolicy("CorsPolicy", builder =>
+				{
+					builder.AllowAnyOrigin();
+					builder.AllowAnyMethod();
+					builder.AllowAnyHeader();
+
+				});
+			});
 		}
 	}
 }

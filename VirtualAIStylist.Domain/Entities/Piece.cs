@@ -12,5 +12,8 @@ namespace VirtualAIStylist.Domain.Entities
 
 		public int WardrobeId { get; set; }
 		public Wardrobe Wardrobe { get; set; }
+
+	    public string AccountId { get; set; }
+		public Account Account { get; set; }
 	}
 }

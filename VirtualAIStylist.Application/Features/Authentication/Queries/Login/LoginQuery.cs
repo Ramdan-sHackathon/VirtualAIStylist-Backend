@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VirtualAIStylist.Application.Utility;
 using VirtualAIStylist.Domain.Entities;
+using VirtualAIStylist.Domain.Interfaces;
 
 namespace VirtualAIStylist.Application.Features.Authentication.Queries.Login
 {
@@ -21,10 +22,12 @@ namespace VirtualAIStylist.Application.Features.Authentication.Queries.Login
 	{
 		private readonly SignInManager<Account> _singInManager;
 		private readonly UserManager<Account> _userManager;
-		public LoginQueryHandler(SignInManager<Account> singInManager, UserManager<Account> userManager)
+		private readonly IAuthService _authService;
+		public LoginQueryHandler(SignInManager<Account> singInManager, UserManager<Account> userManager, IAuthService authService)
 		{
 			_singInManager = singInManager;
 			_userManager = userManager;
+			_authService = authService;
 		}
 
 		public async Task<Response> Handle(LoginQuery request, CancellationToken cancellationToken)
@@ -50,6 +53,7 @@ namespace VirtualAIStylist.Application.Features.Authentication.Queries.Login
 				LastName = user.LastName,
 				Age = user.Age,
 				Gender = user.Gender,
+				Token=await _authService.CreateTokenAsync(user,_userManager)
 			}, "Logged in successfully!");
 		}
 	}
