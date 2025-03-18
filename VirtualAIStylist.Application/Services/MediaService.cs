@@ -35,19 +35,22 @@ namespace VirtualAIStylist.Application.Services
 		{
 			string extention = Path.GetExtension(Image.FileName);
 			string imageName = $"{Guid.NewGuid().ToString()}{extention}";
-			string directoryPath = Path.Combine("wwwroot","images");
+
+			string returnedPath = Path.Combine("files", "images");
+			string directoryPath = Path.Combine("wwwroot", returnedPath);
 			if (!Directory.Exists(directoryPath))
 			{
 				Directory.CreateDirectory(directoryPath);
 			}
 
-			string imagePath = (Path.Combine(directoryPath, imageName)).Replace('\\','/');
+			string imagePath = (Path.Combine(directoryPath, imageName)).Replace('\\', '/');
 			using (var stream = new FileStream(imagePath, FileMode.Create))
 			{
 				Image.CopyTo(stream);
 			}
+			returnedPath = Path.Combine(returnedPath, imageName).Replace('\\', '/');
 			await Task.CompletedTask;
-			return $"{_configuration["BaseUrl"]}{imagePath}";
+			return _configuration["BaseUrl"] + returnedPath;
 		}
 
 	}
